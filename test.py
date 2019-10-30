@@ -62,16 +62,21 @@ def select_lead_column(A):
 		if (min_el >= A[-1][i]):
 			min_el = A[-1][i]
 			index = i
+	print('Главный столбец с индексом', index)
 	return index
 
 def select_lead_row(A, col):
-	min_quo = A[0][0]/A[0][col]
-	index = 0
-	print(min_quo)
+	for i in range(A.shape[0]):
+		if (A[i][col] != 0):
+			min_quo = A[i][0] / A[i][col]
+			index = i
+			break
 	for i in range(1, A.shape[0]-1):
+		if (A[i][col] == 0): continue
 		if (min_quo > (A[i][0]/A[i][col])):
 			min_quo = A[i][0]/A[i][col]
 			index = i
+	print('Главная строка с индексом', index)
 	return index
 		
 def check_solved(A):
@@ -84,13 +89,13 @@ def check_solved(A):
 def conversion(A, c, r):
 	print(A, 'c =', c, 'r =', r)
 	main_element = A[r][c]
+	print(main_element)
 	for i in range(A.shape[1]):
 		A[r][i] /= main_element
 	for i in range(A.shape[0]):
-		for j in range(A.shape[1]):
-			if i == r : continue
-			A[i][j] -= A[r][j] * A[i][c]
-	print(A)
+		if (i != r):
+			A[i] -= (A[r] * A[i][c])	
+	print('%.3f', A)
 	print('\n')
 
 
